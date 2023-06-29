@@ -9,10 +9,13 @@ buildscript {
 }
 
 apply plugin: 'com.android.library'
+apply plugin: 'maven-publish'
+
+
 
 android {
-	namespace 'com.android.timezonepicker'
-	
+    namespace 'com.android.timezonepicker'
+    
     compileSdkVersion 29
 
     defaultConfig {
@@ -20,7 +23,18 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
+        
+        aarMetadata {
+            minCompileSdk = 29
+        }
     }
+    
+    publishing {
+        singleVariant('release') {
+            withSourcesJar()
+        }
+    }
+
     
     lint {
         abortOnError false
