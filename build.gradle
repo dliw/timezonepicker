@@ -12,36 +12,23 @@ apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
 
 android {
-    namespace 'com.android.timezonepicker'
-    
     compileSdkVersion 29
 
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 29
         versionCode 1
-        versionName "1.0"
-        
-        aarMetadata {
-            minCompileSdk = 29
-        }
+        versionName "1.0.0"
     }
     
-    publishing {
-        singleVariant('release') {
-            withSourcesJar()
-        }
-    }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
     
-    lint {
+    lintOptions {
         abortOnError false
     }
-
 }
 
 allprojects {
@@ -53,4 +40,17 @@ allprojects {
 
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = 'com.android'
+				artifactId = 'timezonepicker'
+				version = '1.0.0'
+            }
+        }
+    }
 }
